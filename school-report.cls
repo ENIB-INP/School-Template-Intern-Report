@@ -6,10 +6,10 @@
 \newlength{\bindingoffset}
 \newlength{\logomargin}
 
-\newcommand{\schoolLogo}{./cover/cesi}
+\newcommand{\schoolLogo}{./cover/enib_inp}
 \newcommand{\companyLogo}{./cover/company}
-\newcommand{\frontCover}{./cover/front-background-cesi.pdf}
-\newcommand{\backCover}{./cover/back-background-cesi.pdf}
+\newcommand{\frontCover}{./cover/front-background.pdf}
+\newcommand{\backCover}{./cover/back-background.pdf}
 
 \newcommand{\globalMail}{\@mail}
 
