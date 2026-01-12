@@ -22,10 +22,10 @@ viewpdf: pdf
 pdf: $(TARGET).pdf
 
 $(TARGET).pdf: $(SOURCE_FILES) $(BIB_FILES) $(FIGURES) school-report.cls
-	pdflatex -interaction=nonstopmode -jobname=$(TARGET) $(SOURCE_FILES)
+	xelatex -interaction=nonstopmode -jobname=$(TARGET) $(SOURCE_FILES)
 	biber $(TARGET)
 	makeglossaries $(TARGET)
-	pdflatex -interaction=nonstopmode -jobname=$(TARGET) $(SOURCE_FILES) # For biber
+	xelatex -interaction=nonstopmode -jobname=$(TARGET) $(SOURCE_FILES) # For biber
 
 clean:
 	rm -f $(TARGET).{ps,bcf,run.xml}

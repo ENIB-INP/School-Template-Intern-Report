@@ -1,88 +1,250 @@
-# Report LaTeX Template
+# School Report LaTeX Template
 
-This repository provides a LaTeX template inspired by the official template recommended by INRIA for thesis manuscripts:  
-[INRIA Thesis Template](https://gitlab.inria.fr/ed-mathstic/latex-template)
+A professional LaTeX template for internship reports and academic documents. This template is inspired by the official template recommended by INRIA for thesis manuscripts.
 
----
+## Overview
 
-## Demo
+This template provides a complete document structure with custom styling, cover pages, bibliography management, and glossary support. It uses XeLaTeX for advanced font support and includes D-DIN as the main font family with Inconsolata for code listings.
 
-You can find an example of a compiled document here:  
-[Compiled PDF example](https://github.com/ENIB-Community/ENIB_latex_template/blob/main/main.pdf)
+## Features
 
----
+- Professional cover pages (front and back)
+- Custom document class with consistent styling
+- Bibliography management with biblatex and Biber
+- Glossary and acronym support
+- Code listings with syntax highlighting
+- Automatic table of contents, figures, tables, and listings
+- Header and footer customization
+- Multi-language support (English by default)
+
+## Requirements
+
+### LaTeX Distribution
+
+You need a full LaTeX distribution installed on your system:
+
+- **TeX Live** (recommended) - Full installation
+- **MiKTeX** (Windows) - Full installation
+- **MacTeX** (macOS) - Full installation
+
+### Additional Packages
+
+Some packages may not be included in the basic installation. Install them using your distribution's package manager:
+
+**Fedora / RHEL:**
+```bash
+sudo dnf install texlive-abstract texlive-wallpaper texlive-biblatex texlive-biber texlive-glossaries
+```
+
+**Debian / Ubuntu:**
+```bash
+sudo apt-get install texlive-full
+```
+
+**Arch Linux:**
+```bash
+sudo pacman -S texlive-most
+```
+
+**macOS (MacTeX):**
+The full MacTeX distribution includes all necessary packages.
+
+## Repository Structure
+
+```
+.
+├── main.tex                    # Main document file
+├── school-report.cls           # Custom document class
+├── Makefile                    # Build automation
+├── glossary.tex                # Glossary and acronym definitions
+│
+├── cover/                      # Cover page files
+│   ├── front.tex              # Front cover content
+│   ├── back.tex               # Back cover content
+│   ├── company.png            # Company logo
+│   ├── enib_inp.png           # School logo
+│   └── profile.jpg            # Profile picture
+│
+├── introduction/               # Introduction chapter
+├── chapter1/                   # Chapter 1
+├── chapter2/                   # Chapter 2
+├── chapter3/                   # Chapter 3
+├── conclusion/                 # Conclusion chapter
+├── appendix/                   # Appendices
+│
+├── biblio/                     # Bibliography files
+│   └── biblio.bib             # Bibliography database
+│
+├── d-din/                      # D-DIN font files
+└── inconsolata-4/              # Inconsolata font files (code listings)
+```
 
 ## Getting Started
 
-### Repository Structure
+### 1. Customize the Cover Pages
 
-- **`main.tex`**  
-  The main document file defining the overall structure; contains no content itself.
+Edit the cover page files to add your information:
 
-- **`enib-report.cls`**  
-  Custom class file managing package imports, bibliography settings (including citation styles), and the full document layout—cover pages included.
+**Front Cover (`cover/front.tex`):**
+- Author name
+- Report title
+- Semester information
+- Date and location
+- Jury members
+- Company information
+- Student email
 
-- **`cover/front.tex`**  
-  Contains variables to be filled by the author for the front cover. These variables are used in the customized `\maketitle` command.
+**Back Cover (`cover/back.tex`):**
+- Subject
+- Keywords
+- Work done summary
+- Company feedback
+- Conclusion
 
-- **`cover/back.tex`**  
-  Contains variables to be completed for the back cover, used by macros defined in the class file.
+### 2. Add Your Content
 
-- **`Makefile`**  
-  Simplifies compiling the LaTeX document and bibliography into a PDF (see details below).
+Edit the chapter files in their respective directories:
+- `introduction/introduction.tex`
+- `chapter1/chapter1.tex`
+- `chapter2/chapter2.tex`
+- `chapter3/chapter3.tex`
+- `conclusion/conclusion.tex`
+- `appendix/appendix.tex`
 
-- **Chapter directories**  
-  Each directory corresponds to a chapter of the report and contains its respective content.
+### 3. Customize Logos and Images
 
----
+Replace the logo files in the `cover/` directory:
+- `company.png` - Company logo
+- `enib_inp.png` - School logo
+- `profile.jpg` - Profile picture
 
-### Customizing Your Report
+The logo paths can also be modified in `school-report.cls` if you prefer different file names or locations.
 
-- **Front and Back Cover**  
-  Update the author and report details by editing the variables in `cover/front.tex` and `cover/back.tex`.
+### 4. Add Bibliography Entries
 
-- **Logos and Images**  
-  - To change the company logo, replace the image referenced by the command `\companyLogo` (default path: `./cover/company`).  
-  - To change the ENIB logo, replace the image referenced by the command `\enibLogo` (default path: `./cover/enib_inp`).  
-  - To change the profile picture, replace the image at `cover/profile.jpg`.
+Add your references to `biblio/biblio.bib` in BibTeX format. The template uses biblatex with the IEEE citation style by default.
 
----
+### 5. Define Glossary Terms
 
-### Dependencies
+Add glossary entries and acronyms in `glossary.tex` using the `\newglossaryentry` and `\newacronym` commands.
 
-You need a LaTeX distribution (e.g., TeX Live) to compile the template. Some required packages are not included in the basic TeX Live installation.
+## Compilation
 
-- **Fedora** (install with `dnf install`):  
-  - `texlive-abstract`  
-  - `texlive-wallpaper`
+The template includes a Makefile to simplify the compilation process.
 
-- **Arch Linux**:  
-  - Install the [texlive-most](https://wiki.archlinux.org/title/TeX_Live) package group
+### Basic Compilation
 
-- **Other distributions**:  
-  - Search for full TeX Live packages at [pkgs.org](https://pkgs.org/search/?q=texlive-full)
+Compile the document and generate the PDF:
 
----
+```bash
+make
+```
 
-### Compiling the Document
+or
 
-Use the provided `Makefile` to automate compilation:
+```bash
+make pdf
+```
 
-- **Compile the document and bibliography:**  
-  ```bash
-  make
-  ```
+### View the PDF
 
-- **Open the generated PDF:**  
-  ```bash
-  make viewpdf
-  ```
+Compile and open the PDF in your default viewer:
 
-- **Clean auxiliary files (including PDF):**  
-  ```bash
-  make clean
-  ```
+```bash
+make viewpdf
+```
 
----
+### Clean Build Files
 
-Feel free to reach out if you need help customizing or compiling your report!
+Remove all auxiliary files generated during compilation:
+
+```bash
+make clean
+```
+
+**Note:** The compilation process runs XeLaTeX multiple times to properly resolve cross-references, citations, and glossary entries. This is normal and expected.
+
+## Manual Compilation
+
+If you prefer to compile manually, use the following sequence:
+
+```bash
+xelatex main.tex
+biber main
+makeglossaries main
+xelatex main.tex
+```
+
+## Customization
+
+### Changing Fonts
+
+The template uses D-DIN as the main font family. Font settings are defined in `school-report.cls`. To change fonts, modify the `\setmainfont`, `\setsansfont`, and `\setmonofont` commands.
+
+### Modifying Document Class
+
+The document class file `school-report.cls` contains:
+- Package imports and configuration
+- Page layout and geometry settings
+- Header and footer definitions
+- Custom environments and commands
+- Bibliography and glossary settings
+
+Modify this file to customize the overall document appearance and behavior.
+
+### Citation Style
+
+The template uses the IEEE citation style by default. To change it, modify the `biblatex` package options in `school-report.cls`:
+
+```latex
+\RequirePackage[
+  backend=biber,
+  style=ieee  % Change this to your preferred style
+]{biblatex}
+```
+
+Available styles include: `numeric`, `alphabetic`, `authoryear`, `ieee`, `apa`, etc.
+
+## Troubleshooting
+
+### Missing Font Warnings
+
+If you see font warnings, ensure that:
+- The D-DIN font files are present in the `d-din/` directory
+- The Inconsolata font files are present in the `inconsolata-4/` directory
+- XeLaTeX is being used (not pdfLaTeX)
+
+### Bibliography Not Appearing
+
+If citations are not resolved:
+1. Ensure `biber` is installed
+2. Run `biber main` after the first LaTeX compilation
+3. Run LaTeX again to include the bibliography
+
+### Glossary Not Appearing
+
+If glossary entries are not showing:
+1. Ensure `makeglossaries` is installed
+2. Run `makeglossaries main` after the first LaTeX compilation
+3. Run LaTeX again to include the glossary
+
+### Compilation Errors
+
+If you encounter compilation errors:
+1. Check the `.log` file for detailed error messages
+2. Ensure all required packages are installed
+3. Verify that all referenced files exist
+4. Try cleaning with `make clean` and recompiling
+
+## License
+
+This template is provided as-is for academic and educational purposes.
+
+## Contributing
+
+Contributions, suggestions, and improvements are welcome. Please feel free to open issues or submit pull requests.
+
+## Acknowledgments
+
+This template is inspired by the INRIA Thesis Template available at:
+https://gitlab.inria.fr/ed-mathstic/latex-template

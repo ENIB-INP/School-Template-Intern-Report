@@ -11,16 +11,13 @@
 \newcommand{\frontCover}{./cover/front-background.pdf}
 \newcommand{\backCover}{./cover/back-background.pdf}
 
-\newcommand{\globalMail}{\@mail}
-
 % Set the values for the margins
 \setlength{\docmargin}{2cm} % Global margin for the document
 \setlength{\headheight}{30pt} % Set the header height
 \setlength{\headsep}{20pt} % Set the separation between the header and the body text
 
 % ------------------------- ENCODING AND LANGUAGES -------------------------
-% Load package for UTF-8 character encoding
-\RequirePackage[utf8]{inputenc}
+% Note: XeLaTeX/LuaLaTeX use UTF-8 by default, so inputenc is not needed
 % Load package for language management, English by default
 \RequirePackage[english]{babel}
 
@@ -29,8 +26,8 @@
 \RequirePackage{amsmath, amssymb}
 
 % ------------------------- COLORS AND SYMBOLS -------------------------
-% Load package for the use of named colors
-\RequirePackage[usenames,dvipsnames]{color}
+% Load package for the use of named colors (xcolor is more modern than color)
+\RequirePackage[usenames,dvipsnames]{xcolor}
 % Load package for additional textual symbols
 \RequirePackage{textcomp}
 % Load package for various symbols
@@ -45,12 +42,38 @@
 \RequirePackage{multicol}
 
 % ------------------------- FONTS AND ENCODING -------------------------
-% Use T1 encoding for characters
-\RequirePackage[T1]{fontenc}
-% Improves the printing quality of characters
-\RequirePackage{lmodern}
-% Fixes some issues with Computer Modern fonts
-\RequirePackage{fix-cm}
+% Load fontspec for OpenType font support (requires XeLaTeX or LuaLaTeX)
+\RequirePackage{fontspec}
+% Load d-din fonts from local directory
+% Path is relative to the main .tex file location
+\setmainfont{D-DIN}[
+    Path=d-din/,
+    Extension=.otf,
+    UprightFont=*,
+    BoldFont=*-Bold,
+    ItalicFont=*-Italic,
+]
+% Set d-din as default font family for the entire document
+\setsansfont{D-DIN}[
+    Path=d-din/,
+    Extension=.otf,
+    UprightFont=*,
+    BoldFont=*-Bold,
+    ItalicFont=*-Italic,
+]
+\renewcommand{\familydefault}{\sfdefault}
+% Set monospace font for code listings (not d-din)
+% Using Inconsolata from local directory inconsolata-4
+% Note: fontspec will search in system directories first, but will find the local file
+\setmonofont{Inconsolata}[
+    Path=./inconsolata-4/,
+    Extension=.ttf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold,
+    ItalicFont=*-Regular,
+    BoldItalicFont=*-Bold,
+    Scale=0.9,
+]
 
 % ------------------------- GRAPHICS AND IMAGES -------------------------
 % Load package for drawing graphs, boxes, etc.
@@ -109,21 +132,45 @@
 % Load package for the use of French quotation marks
 \RequirePackage{csquotes}
 
-% Configure Listings
-% Pour les listings (package listings)
+% ------------------------- CODE LISTINGS CONFIGURATION -------------------------
+% Configure listings package settings
 \renewcommand{\lstlistingname}{Code}
 \renewcommand{\lstlistlistingname}{L\MakeLowercase{ist of \lstlistingname s}}
+
+% Define code style with syntax highlighting
+\lstdefinestyle{monstyle}{
+    backgroundcolor=\color{gray!10},   % Background color
+    basicstyle=\ttfamily\normalsize,   % Font family and size
+    keywordstyle=\color{blue}\bfseries, % Keywords in blue and bold
+    commentstyle=\color{green!60!black}\itshape, % Comments in green italic
+    stringstyle=\color{red},           % Strings in red
+    numbers=left,                      % Line numbers on the left
+    numberstyle=\tiny\color{gray},     % Line number style
+    stepnumber=1,                      % Number every line
+    showstringspaces=false,            % Do not show spaces in strings
+    frame=single,                      % Frame around code
+    rulecolor=\color{black},           % Frame color
+    tabsize=4,                         % Tab size
+    breaklines=true,                   % Automatic line breaking
+    basewidth=0.5em,                   % Base character width
+    lineskip=0.3pt,                    % Reduced line spacing between lines
+    aboveskip=4pt,                     % Space above code block
+    belowskip=4pt,                     % Space below code block
+}
+
+% Set monstyle as default for listings
+\lstset{style=monstyle}
 
 \renewcommand{\listfigurename}{List of Figures}
 \renewcommand{\listtablename}{List of tables}
 
 % Define Font Commands
 % Command for the font style used in the front cover
-\newcommand*{\selectfontfrontcover}{\fontfamily{phv}\selectfont}
+\newcommand*{\selectfontfrontcover}{\sffamily}
 % Command for the font style used in the back cover
-\newcommand*{\selectfontbackcover}{\fontfamily{phv}\selectfont}
+\newcommand*{\selectfontbackcover}{\sffamily}
 % Command for the font style used in chapter headings
-\newcommand*{\selectfontchapheads}{\fontfamily{phv}\selectfont}
+\newcommand*{\selectfontchapheads}{\sffamily}
 
 % ------------------------- BACKGROUND IMAGES FOR COVERS -------------------------
 % Command to Insert Front Cover Background
@@ -298,6 +345,11 @@
 \newcommand{\mail}[1]{\gdef\@mail{#1}}
 \mail{} % Initialize empty
 
+% Define globalMail after @mail is defined
+\makeatletter
+\newcommand{\globalMail}{\@mail}
+\makeatother
+
 % ------------------------- FONT SIZES FOR COVER PAGE -------------------------
 % Define custom font sizes for different elements on the cover page.
 % These font sizes are adjusted to match a 12pt base document.
@@ -394,7 +446,7 @@
   \end{spacing}
 }
 
-% Command to define the "Work Done" (Résumé) section
+% Command to define the "Work Done" section
 \newcommand{\resume}[1]{%
   \vspace{0.5cm} % Add vertical spacing before the section
   \begin{spacing}{1} % Ensure single line spacing
@@ -483,7 +535,7 @@
         inner xsep=5pt, % Internal horizontal padding
         inner ysep=2pt % Internal vertical padding
       ]
-      at (mabox.north) {\sffamily\textbf{#1}}; % Title text in bold sans-serif
+      at (mabox.north) {\sffamily\textbf{#1}}; % Title text in bold d-din font
 
     \end{tikzpicture} % End TikZ drawing
   \end{center} % End centering

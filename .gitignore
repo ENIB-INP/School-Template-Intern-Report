@@ -12,7 +12,13 @@
 *.acn
 *.acr 
 *.alg
+*.glg
+*.glo
 *.gls
+*.ist
+*.lof
+*.lol
+*.lot
 *.ps
 *.run.xml
 *.synctex.gz
