@@ -6,7 +6,7 @@
 \newlength{\bindingoffset}
 \newlength{\logomargin}
 
-\newcommand{\schoolLogo}{./cover/enib_inp}
+\newcommand{\schoolLogo}{./cover/cover_enib_inp_logo}
 \newcommand{\companyLogo}{./cover/company}
 \newcommand{\frontCover}{./cover/front-background.pdf}
 \newcommand{\backCover}{./cover/back-background.pdf}
@@ -382,19 +382,19 @@
 % Define the structure of the cover page
 \makeatletter
 \def\maketitle{%
-  \thispagestyle{empty} % Ensure no headers or footers on the title page
+  \thispagestyle{empty}                          % Ensure no headers or footers on the title page
   {
-    \clearpage % Start on a fresh page
-    \AddToShipoutPicture*{\BackgroundPicfront} % Set background image for the cover page
-    \displayLogos % Display institution/company logos
-    \selectfontfrontcover % Apply custom font settings
+    \clearpage                                   % Start on a fresh page
+    \AddToShipoutPicture*{\BackgroundPicfront}   % Set background image for the cover page
+    \displayLogos                                % Display institution/company logos
+    \selectfontfrontcover                        % Apply custom font settings
 
-    \vskip 6em~\\ % Add vertical space before the title
-    {\HugeTwelve\textsc{Internship report \@semester}} % Report title with semester info
-    \vskip 2em~\\ % Add vertical space before the title
-    {\LARGETwelve Presented by \textbf{\@author}} % Author's name
-    \vskip 2em~\\ % Add vertical space before the title
-    {\LargeTwelve \textbf{\@title}} % Report title in bold
+    \vskip 6em~\\                                % Add vertical space before the title
+    {\LARGETwelve \textbf{Internship report \@semester}} % Report title with semester info
+    \vskip 2em~\\                                % Add vertical space before the author name
+    {\LARGETwelve \textbf{Presented by \@author}} % Author's name
+    \vskip 2em~\\                                % Add vertical space before the report title
+    {\LargeTwelve \textit{\@title}}              % Report title in italic
 
     \vfill ~\\
     {\smallTwelve
