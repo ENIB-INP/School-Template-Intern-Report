@@ -47,7 +47,7 @@
 % Load d-din fonts from local directory
 % Path is relative to the main .tex file location
 \setmainfont{D-DIN}[
-    Path=d-din/,
+    Path=fonts/d-din/,
     Extension=.otf,
     UprightFont=*,
     BoldFont=*-Bold,
@@ -55,7 +55,7 @@
 ]
 % Set d-din as default font family for the entire document
 \setsansfont{D-DIN}[
-    Path=d-din/,
+    Path=fonts/d-din/,
     Extension=.otf,
     UprightFont=*,
     BoldFont=*-Bold,
@@ -66,7 +66,7 @@
 % Using Inconsolata from local directory inconsolata-4
 % Note: fontspec will search in system directories first, but will find the local file
 \setmonofont{Inconsolata}[
-    Path=./inconsolata-4/,
+    Path=./fonts/inconsolata-4/,
     Extension=.ttf,
     UprightFont=*-Regular,
     BoldFont=*-Bold,
