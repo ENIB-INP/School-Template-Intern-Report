@@ -6,7 +6,7 @@
 \newlength{\bindingoffset}
 \newlength{\logomargin}
 
-\newcommand{\schoolLogo}{./cover/enib_inp}
+\newcommand{\schoolLogo}{./cover/cover_enib_inp_logo}
 \newcommand{\companyLogo}{./cover/company}
 \newcommand{\frontCover}{./cover/front-background.pdf}
 \newcommand{\backCover}{./cover/back-background.pdf}
@@ -44,29 +44,40 @@
 % ------------------------- FONTS AND ENCODING -------------------------
 % Load fontspec for OpenType font support (requires XeLaTeX or LuaLaTeX)
 \RequirePackage{fontspec}
-% Load d-din fonts from local directory
+% Load Roboto Condensed as main font for normal text
 % Path is relative to the main .tex file location
-\setmainfont{D-DIN}[
-    Path=d-din/,
-    Extension=.otf,
-    UprightFont=*,
+\setmainfont{RobotoCondensed}[
+    Path=./fonts/roboto-condensed/,
+    Extension=.ttf,
+    UprightFont=*-Regular,
     BoldFont=*-Bold,
     ItalicFont=*-Italic,
+    BoldItalicFont=*-BoldItalic,
 ]
-% Set d-din as default font family for the entire document
-\setsansfont{D-DIN}[
-    Path=d-din/,
-    Extension=.otf,
-    UprightFont=*,
+% Set Roboto Condensed as default font family for the entire document
+\setsansfont{RobotoCondensed}[
+    Path=./fonts/roboto-condensed/,
+    Extension=.ttf,
+    UprightFont=*-Regular,
     BoldFont=*-Bold,
     ItalicFont=*-Italic,
+    BoldItalicFont=*-BoldItalic,
 ]
 \renewcommand{\familydefault}{\sfdefault}
-% Set monospace font for code listings (not d-din)
+% Load Ando font for titles (chapters, sections, etc.)
+\newfontfamily{\andofont}{Ando}[
+    Path=./fonts/ando/,
+    Extension=.ttf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold,
+    ItalicFont=*-Regular,
+    BoldItalicFont=*-Bold,
+]
+% Set monospace font for code listings
 % Using Inconsolata from local directory inconsolata-4
 % Note: fontspec will search in system directories first, but will find the local file
 \setmonofont{Inconsolata}[
-    Path=./inconsolata-4/,
+    Path=./fonts/inconsolata-4/,
     Extension=.ttf,
     UprightFont=*-Regular,
     BoldFont=*-Bold,
@@ -165,12 +176,12 @@
 \renewcommand{\listtablename}{List of tables}
 
 % Define Font Commands
-% Command for the font style used in the front cover
-\newcommand*{\selectfontfrontcover}{\sffamily}
-% Command for the font style used in the back cover
-\newcommand*{\selectfontbackcover}{\sffamily}
-% Command for the font style used in chapter headings
-\newcommand*{\selectfontchapheads}{\sffamily}
+% Command for the font style used in the front cover (using Ando)
+\newcommand*{\selectfontfrontcover}{\andofont}
+% Command for the font style used in the back cover (using Ando)
+\newcommand*{\selectfontbackcover}{\andofont}
+% Command for the font style used in chapter headings (using Ando)
+\newcommand*{\selectfontchapheads}{\andofont}
 
 % ------------------------- BACKGROUND IMAGES FOR COVERS -------------------------
 % Command to Insert Front Cover Background
@@ -248,12 +259,29 @@
 \makeatother
 
 % ------------------------- SECTION HEADERS -------------------------
+% Configure titlesec to use Ando font for all section titles
+\titleformat{\section}
+  {\andofont\Large\bfseries}
+  {}
+  {0em}
+  {}
+\titleformat{\subsection}
+  {\andofont\large\bfseries}
+  {}
+  {0em}
+  {}
+\titleformat{\subsubsection}
+  {\andofont\normalsize\bfseries}
+  {}
+  {0em}
+  {}
+
 % This section defines a custom command to create visually distinct section headers.
 \makeatletter
 % Stylized Section Header
 \newcommand*{\jolipart}[1]{%
   \begin{center}
-    \begin{Huge}\color{black} % Set the text to be large and black.
+    \begin{Huge}\andofont\color{black} % Set the text to be large and black, using Ando font.
       #1 % The content of the section header is passed as an argument.
     \end{Huge}
   \end{center}
@@ -361,6 +389,8 @@
 \newcommand{\normalTwelve}{\fontsize{12}{13.2}\selectfont} % Equivalent to 12pt \normalsize
 \newcommand{\smallTwelve}{\fontsize{11}{13.5}\selectfont} % Equivalent to 12pt \small
 \newcommand{\footnotesizeTwelve}{\fontsize{9.5}{11}\selectfont} % Equivalent to 12pt \footnotesize
+% Large size for main cover title elements (all same size)
+\newcommand{\coverTitleSize}{\fontsize{28}{34}\selectfont} % Large size for main title elements
 
 % ------------------------- DISPLAY LOGOS ON COVER PAGE -------------------------
 \newcommand{\displayLogos}{%
@@ -390,29 +420,27 @@
     \selectfontfrontcover % Apply custom font settings
 
     \vskip 6em~\\ % Add vertical space before the title
-    {\HugeTwelve\textsc{Internship report \@semester}} % Report title with semester info
+    {\coverTitleSize\textbf{\textsc{Internship report \@semester}}} % Report title with semester info, same size and bold
     \vskip 2em~\\ % Add vertical space before the title
-    {\LARGETwelve Presented by \textbf{\@author}} % Author's name
+    {\coverTitleSize\textbf{Presented by \@author}} % Author's name, same size and bold
     \vskip 2em~\\ % Add vertical space before the title
-    {\LargeTwelve \textbf{\@title}} % Report title in bold
+    {\coverTitleSize\textbf{\textit{\@title}}} % Report title in bold and italic, same size
 
     \vfill ~\\
-    {\smallTwelve
+    {\LargeTwelve
     \textbf{Report presented and defended at \@place, on \@date \\~\\}
     }
-    \begin{small}
     \@jury
-    \vskip 4em~\\
-    {\smallTwelve \textbf{Administrative Information:}}\\
+    \vskip 2em~\\
+    {\LargeTwelve \textbf{Administrative Information:}}\\
     \newline
-    \footnotesizeTwelve
+    \largeTwelve
     \begin{tabular}{@{}ll}
     Company: & \@company \\
     Institution: & École Nationale d'Ingénieurs de Brest (ENIB) \\
     Dates: & \@dates \\
     Student email: & \@mail \\
     \end{tabular}
-    \end{small}
     }
 }
 \makeatother
@@ -535,7 +563,7 @@
         inner xsep=5pt, % Internal horizontal padding
         inner ysep=2pt % Internal vertical padding
       ]
-      at (mabox.north) {\sffamily\textbf{#1}}; % Title text in bold d-din font
+      at (mabox.north) {\andofont\textbf{#1}}; % Title text in bold Ando font
 
     \end{tikzpicture} % End TikZ drawing
   \end{center} % End centering
